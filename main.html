@@ -1,0 +1,2568 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>NexGen Solutions — Digital Engineering & Marketing Agency</title>
+
+    <!-- Google Fonts + preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+    <!-- Swiper CSS for modern slider (lightweight, touch-friendly) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg-deep: #010101;
+        --bg-surface: #0a0a0c;
+        --bg-elevated: #111315;
+        --white: #f4f2ef;
+        --primary: #3b82f6;
+        --primary-glow: rgba(59, 130, 246, 0.25);
+        --primary-soft: #2563eb;
+        --accent-cyan: #06b6d4;
+        --accent-green: #10b981;
+        --muted: #8a8f9c;
+        --border-dim: rgba(255, 255, 255, 0.06);
+        --border-med: rgba(255, 255, 255, 0.1);
+        --card-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.5);
+        --transition-default: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--bg-deep);
+        color: var(--white);
+        font-family: "Inter", sans-serif;
+        line-height: 1.5;
+        overflow-x: hidden;
+      }
+
+      /* custom cursor only on desktop */
+      @media (min-width: 1024px) {
+        body {
+          cursor: none;
+        }
+        #custom-cursor {
+          width: 8px;
+          height: 8px;
+          background: var(--primary);
+          border-radius: 50%;
+          position: fixed;
+          pointer-events: none;
+          z-index: 9999;
+          transition: transform 0.1s;
+          mix-blend-mode: difference;
+        }
+        #cursor-trail {
+          width: 32px;
+          height: 32px;
+          border: 1.5px solid rgba(59, 130, 246, 0.5);
+          border-radius: 50%;
+          position: fixed;
+          pointer-events: none;
+          z-index: 9998;
+          transition:
+            width 0.2s,
+            height 0.2s,
+            border-color 0.2s;
+        }
+      }
+
+      /* noise texture overlay */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        pointer-events: none;
+        z-index: 1000;
+      }
+
+      /* scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a0c;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 8px;
+      }
+
+      /* floating navbar */
+      .navbar {
+        position: fixed;
+        top: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(90%, 1200px);
+        background: rgba(10, 10, 12, 0.85);
+        backdrop-filter: blur(16px);
+        border: 1px solid var(--primary);
+        border-radius: 3rem;
+        padding: 0.75rem 1.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 1000;
+        transition: var(--transition-default);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      }
+      .navbar.scrolled {
+        top: 0.8rem;
+        background: rgba(5, 5, 7, 0.96);
+        border-color: rgba(59, 130, 246, 0.3);
+      }
+      .logo {
+        font-family: "Space Grotesk", monospace;
+        font-size: 1.7rem;
+        font-weight: 700;
+        background: linear-gradient(130deg, #fff 20%, #3b82f6 80%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        letter-spacing: -0.02em;
+      }
+      .nav-links {
+        display: flex;
+        gap: 0.75rem;
+        list-style: none;
+      }
+      .nav-links a {
+        color: #ddd;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        transition: 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        background: rgba(59, 130, 246, 0.2);
+        color: white;
+      }
+      .nav-cta {
+        background: var(--primary);
+        padding: 0.5rem 1.3rem;
+        border-radius: 2rem;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-decoration: none;
+        color: white;
+        transition: 0.2s;
+        box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+      }
+      .nav-cta:hover {
+        background: #2563eb;
+        transform: scale(1.02);
+      }
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+      }
+      .menu-toggle span {
+        width: 22px;
+        height: 2px;
+        background: white;
+        transition: 0.3s;
+      }
+
+      /* responsive nav */
+      @media (max-width: 860px) {
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 70px;
+          left: 0;
+          width: 100%;
+          background: #0f0f12;
+          backdrop-filter: blur(20px);
+          flex-direction: column;
+          padding: 1rem;
+          border-radius: 1.5rem;
+          border: 1px solid var(--border-med);
+        }
+        .nav-links.active {
+          display: flex;
+        }
+        .menu-toggle {
+          display: flex;
+        }
+      }
+
+      /* Hero section */
+      .hero {
+        min-height: 100vh;
+        padding: 10rem 5% 6rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-glow {
+        position: absolute;
+        width: 50vw;
+        height: 50vw;
+        background: radial-gradient(
+          circle,
+          rgba(59, 130, 246, 0.2) 0%,
+          transparent 70%
+        );
+        top: -20%;
+        right: -20%;
+        filter: blur(80px);
+        pointer-events: none;
+      }
+      .hero-badge {
+        display: inline-flex;
+        background: rgba(59, 130, 246, 0.12);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 40px;
+        padding: 0.3rem 1rem;
+        width: fit-content;
+        font-size: 0.75rem;
+        font-weight: 500;
+        margin-bottom: 2rem;
+        backdrop-filter: blur(4px);
+      }
+      .hero-title {
+        font-size: clamp(2.8rem, 6vw, 5.5rem);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        font-family: "Space Grotesk", sans-serif;
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #fff, #3b82f6, #06b6d4);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .typed-text {
+        color: var(--primary);
+        border-right: 3px solid var(--primary);
+      }
+      .hero-desc {
+        max-width: 550px;
+        margin: 1.8rem 0 2rem;
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+      .btn-group {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .btn-primary {
+        background: var(--primary);
+        padding: 0.8rem 2rem;
+        border-radius: 2rem;
+        font-weight: 600;
+        text-decoration: none;
+        color: white;
+        transition: 0.3s;
+        box-shadow: 0 0 12px var(--primary-glow);
+      }
+      .btn-outline {
+        border: 1px solid var(--border-med);
+        padding: 0.8rem 2rem;
+        border-radius: 2rem;
+        font-weight: 500;
+        text-decoration: none;
+        color: #ccc;
+        transition: 0.3s;
+      }
+      .btn-outline:hover {
+        border-color: var(--primary);
+        background: rgba(59, 130, 246, 0.1);
+      }
+      .stats-row {
+        display: flex;
+        gap: 3rem;
+        margin-top: 4rem;
+        flex-wrap: wrap;
+      }
+      .stat {
+        border-left: 2px solid var(--primary);
+        padding-left: 1rem;
+      }
+      .stat-number {
+        font-size: 2.2rem;
+        font-weight: 800;
+        font-family: "Space Grotesk", monospace;
+      }
+      .stat-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+
+      /* About section */
+      .about {
+        background: linear-gradient(180deg, #010101 0%, #05080f 100%);
+        border-top: 1px solid var(--border-dim);
+        border-bottom: 1px solid var(--border-dim);
+        position: relative;
+        overflow: hidden;
+      }
+      .about-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+      }
+      .about-header {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+      .about-grid {
+        display: flex;
+        flex-direction: row;
+        gap: 3rem;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .about-content {
+        flex: 1.5;
+      }
+      .about-text {
+        color: var(--muted);
+        margin-bottom: 1.8rem;
+        font-size: 1.05rem;
+        line-height: 1.6;
+      }
+      .about-highlight {
+        font-weight: 600;
+        color: var(--white);
+        border-left: 3px solid var(--primary);
+        padding-left: 1rem;
+        margin: 1.5rem 0;
+        font-style: normal;
+        font-size: 1.1rem;
+      }
+      .about-stats-inline {
+        display: flex;
+        gap: 2rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+      }
+      .inline-stat {
+        background: var(--bg-elevated);
+        padding: 0.8rem 1.5rem;
+        border-radius: 2rem;
+        border: 1px solid var(--border-dim);
+        backdrop-filter: blur(4px);
+      }
+      .inline-stat .stat-number-sm {
+        font-size: 1.8rem;
+        font-weight: 800;
+        font-family: "Space Grotesk", monospace;
+        color: var(--primary);
+        line-height: 1;
+      }
+      .about-visual {
+        flex: 1;
+        background: radial-gradient(
+          circle at 30% 20%,
+          rgba(59, 130, 246, 0.15),
+          transparent 70%
+        );
+        border-radius: 2rem;
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .about-badge-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+        background: rgba(5, 5, 10, 0.6);
+        backdrop-filter: blur(8px);
+        border-radius: 2rem;
+        padding: 1.5rem;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        width: 100%;
+      }
+      .about-badge-grid div {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        font-weight: 500;
+        padding: 0.5rem;
+        border-radius: 1rem;
+        transition: all 0.2s;
+      }
+      .about-badge-grid div i {
+        color: var(--primary);
+      }
+      @media (max-width: 860px) {
+        .about-grid {
+          flex-direction: column;
+        }
+        .about-badge-grid {
+          width: 100%;
+        }
+      }
+
+      /* marquee */
+      .marquee {
+        border-top: 1px solid var(--border-dim);
+        border-bottom: 1px solid var(--border-dim);
+        background: #050608;
+        padding: 1rem 0;
+        overflow: hidden;
+      }
+      .marquee-track {
+        display: flex;
+        gap: 3rem;
+        animation: scroll 22s linear infinite;
+        width: max-content;
+      }
+      @keyframes scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+      .tech-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+        color: #b0b5c4;
+      }
+
+      /* sections */
+      section {
+        padding: 6rem 5%;
+      }
+      .section-header {
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto 4rem;
+      }
+      .eyebrow {
+        display: inline-block;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: var(--primary);
+        margin-bottom: 0.8rem;
+      }
+      h2 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 700;
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.02em;
+      }
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+      }
+      .service-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-dim);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        transition: var(--transition-default);
+      }
+      .service-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--primary);
+        background: #0f1117;
+      }
+      .service-icon {
+        background: rgba(59, 130, 246, 0.15);
+        color: var(--primary);
+        width: 50px;
+        height: 50px;
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+      }
+      .service-card h3 {
+        font-size: 1.35rem;
+        margin-bottom: 0.5rem;
+      }
+
+      /* Process steps */
+      .process-steps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        justify-content: center;
+      }
+      .step {
+        flex: 1;
+        min-width: 200px;
+        background: var(--bg-elevated);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        text-align: center;
+        border: 1px solid var(--border-dim);
+        transition:
+          transform 0.25s ease,
+          border-color 0.2s;
+      }
+      .step:hover {
+        border-color: var(--primary);
+        transform: translateY(-6px);
+      }
+      .step-number {
+        font-size: 3rem;
+        font-weight: 800;
+        font-family: "Space Grotesk", monospace;
+        color: var(--primary);
+        display: inline-block;
+        min-width: 80px;
+        letter-spacing: 2px;
+      }
+      .counter-prefix {
+        font-size: 2rem;
+        vertical-align: super;
+      }
+      .step h3 {
+        margin: 0.75rem 0 0.5rem;
+      }
+
+      /* portfolio - dual category (dev + marketing) */
+      .portfolio-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+        flex-wrap: wrap;
+      }
+      .tab-btn {
+        background: rgba(10, 10, 12, 0.8);
+        border: 1px solid var(--border-med);
+        backdrop-filter: blur(8px);
+        padding: 0.7rem 2rem;
+        border-radius: 3rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--muted);
+        cursor: pointer;
+        transition: all 0.25s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      .tab-btn i {
+        width: 18px;
+        height: 18px;
+      }
+      .tab-btn.active {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+        box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+      }
+      .portfolio-panel {
+        display: none;
+        animation: fadeInUp 0.5s ease forwards;
+      }
+      .portfolio-panel.active-panel {
+        display: block;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      /* portfolio grid cards (unchanged look) */
+      .software-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .software-header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      .software-header p {
+        color: var(--muted);
+        max-width: 600px;
+        margin: 0.5rem auto 0;
+      }
+      .software-stats {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2.5rem;
+        flex-wrap: wrap;
+      }
+      .software-stat-card {
+        background: rgba(10, 10, 12, 0.6);
+        backdrop-filter: blur(8px);
+        border: 1px solid var(--border-med);
+        border-radius: 1.5rem;
+        padding: 1rem 2rem;
+        text-align: center;
+        transition: 0.3s;
+      }
+      .software-stat-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-3px);
+      }
+      .software-stat-number {
+        font-size: 2rem;
+        font-weight: 800;
+        font-family: "Space Grotesk", monospace;
+        color: var(--primary);
+      }
+      .software-stat-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .software-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+      }
+      .software-card {
+        background: var(--bg-elevated);
+        border-radius: 1.8rem;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid var(--border-dim);
+        position: relative;
+      }
+      .software-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--primary);
+        box-shadow: 0 25px 40px -15px rgba(59, 130, 246, 0.25);
+      }
+      .card-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: rgba(59, 130, 246, 0.9);
+        backdrop-filter: blur(4px);
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: white;
+        z-index: 2;
+      }
+      .software-card-img {
+        height: 200px;
+        background: linear-gradient(135deg, #1a1f2c, #0b0d12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .software-card-img::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(59, 130, 246, 0.1),
+          transparent
+        );
+        pointer-events: none;
+      }
+      .software-card-content {
+        padding: 1.5rem;
+      }
+      .software-card-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        font-family: "Space Grotesk", sans-serif;
+        margin-bottom: 0.5rem;
+      }
+      .software-card-desc {
+        color: var(--muted);
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+      }
+      .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.2rem;
+      }
+      .tech-pill {
+        background: rgba(59, 130, 246, 0.15);
+        padding: 0.25rem 0.7rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 500;
+        color: var(--primary);
+      }
+      .metric-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-dim);
+        margin-top: 0.5rem;
+      }
+      .metric-item {
+        text-align: center;
+      }
+      .metric-value {
+        font-size: 1.1rem;
+        font-weight: 700;
+        font-family: "Space Grotesk", monospace;
+        color: var(--accent-green);
+      }
+      .metric-label {
+        font-size: 0.65rem;
+        color: var(--muted);
+      }
+      .case-study-link {
+        color: var(--primary);
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        transition: gap 0.2s;
+      }
+      .case-study-link:hover {
+        gap: 0.6rem;
+      }
+
+      /* Process steps */
+      .process-steps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        justify-content: center;
+      }
+      .step {
+        flex: 1;
+        min-width: 200px;
+        background: var(--bg-elevated);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        text-align: center;
+        border: 1px solid var(--border-dim);
+        transition:
+          transform 0.25s ease,
+          border-color 0.2s;
+      }
+      .step:hover {
+        border-color: var(--primary);
+        transform: translateY(-6px);
+      }
+      .step-number {
+        font-size: 3rem;
+        font-weight: 800;
+        font-family: "Space Grotesk", monospace;
+        color: var(--primary);
+        display: inline-block;
+        min-width: 80px;
+        letter-spacing: 2px;
+      }
+      .step h3 {
+        margin: 0.75rem 0 0.5rem;
+      }
+      /* marketing section */
+      .marketing-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .marketing-header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      .marketing-header p {
+        color: var(--muted);
+        max-width: 600px;
+        margin: 0.5rem auto 0;
+      }
+      .marketing-stats {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2.5rem;
+        flex-wrap: wrap;
+      }
+      .marketing-stat-card {
+        background: rgba(10, 10, 12, 0.6);
+        backdrop-filter: blur(8px);
+        border: 1px solid var(--border-med);
+        border-radius: 1.5rem;
+        padding: 1rem 2rem;
+        text-align: center;
+        transition: 0.3s;
+      }
+      .marketing-stat-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-3px);
+      }
+      .marketing-stat-number {
+        font-size: 2rem;
+        font-weight: 800;
+        font-family: "Space Grotesk", monospace;
+        color: var(--primary);
+      }
+      .marketing-stat-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .marketing-slider-wrapper {
+        position: relative;
+        width: 100%;
+        padding: 0 40px;
+        margin: 0 auto;
+      }
+      .marketing-swiper {
+        overflow: hidden;
+        padding: 1rem 0 2.5rem;
+      }
+      .video-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .video-card {
+        background: var(--bg-elevated);
+        border-radius: 2rem;
+        overflow: hidden;
+        border: 1px solid var(--border-med);
+        transition: all 0.3s ease;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+        box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
+      }
+      .video-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--primary);
+        box-shadow: 0 30px 45px -12px rgba(59, 130, 246, 0.2);
+      }
+      .video-9x16 {
+        aspect-ratio: 9 / 16;
+        width: 100%;
+        background: #000;
+        overflow: hidden;
+        position: relative;
+      }
+      .video-9x16 video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .video-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        padding: 1rem;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .video-card:hover .video-overlay {
+        opacity: 1;
+      }
+      .video-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: white;
+      }
+      .video-metric {
+        font-size: 0.7rem;
+        color: var(--primary);
+      }
+      .video-info {
+        padding: 1rem;
+        text-align: center;
+      }
+      .video-info h4 {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+      }
+      .video-info p {
+        font-size: 0.75rem;
+        color: var(--muted);
+      }
+      .campaign-badge {
+        display: inline-block;
+        background: rgba(16, 185, 129, 0.2);
+        color: #10b981;
+        border-radius: 20px;
+        padding: 0.2rem 0.7rem;
+        font-size: 0.65rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+      }
+
+      /* Custom swiper buttons */
+      .marketing-swiper .swiper-button-next,
+      .marketing-swiper .swiper-button-prev {
+        color: var(--primary);
+        background: rgba(10, 10, 12, 0.8);
+        backdrop-filter: blur(6px);
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid var(--border-med);
+      }
+      .marketing-swiper .swiper-button-next:after,
+      .marketing-swiper .swiper-button-prev:after {
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .marketing-swiper .swiper-pagination-bullet-active {
+        background: var(--primary);
+      }
+      @media (max-width: 640px) {
+        .marketing-slider-wrapper {
+          padding: 0 20px;
+        }
+      }
+
+      /* ===== ENHANCED TESTIMONIAL SLIDER (Swiper) ===== */
+      .testimonials-slider-container {
+        position: relative;
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 0 40px;
+      }
+      .testimonials-swiper {
+        overflow: hidden;
+        padding: 1rem 0 2rem;
+      }
+      .testimonial-card {
+        background: var(--bg-surface);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        border: 1px solid var(--border-dim);
+        transition: 0.3s;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      .testimonial-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-4px);
+        background: #0f1117;
+      }
+      .stars {
+        color: #fbbf24;
+        margin-bottom: 1.2rem;
+        font-size: 1.1rem;
+      }
+      .testimonial-text {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 1.5rem;
+        color: #e2e8f0;
+        flex: 1;
+      }
+      .testimonial-author {
+        font-weight: 700;
+        font-size: 0.9rem;
+        border-top: 1px solid var(--border-dim);
+        padding-top: 1rem;
+        margin-top: auto;
+        color: var(--primary);
+      }
+      .testimonial-role {
+        font-size: 0.7rem;
+        color: var(--muted);
+        margin-top: 0.2rem;
+      }
+      /* Swiper navigation buttons custom */
+      .swiper-button-next,
+      .swiper-button-prev {
+        color: var(--primary);
+        background: rgba(10, 10, 12, 0.8);
+        backdrop-filter: blur(6px);
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid var(--border-med);
+        transition: 0.2s;
+      }
+      .swiper-button-next:after,
+      .swiper-button-prev:after {
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .swiper-button-next:hover,
+      .swiper-button-prev:hover {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: white;
+      }
+      .swiper-pagination-bullet {
+        background: var(--muted);
+        opacity: 0.5;
+      }
+      .swiper-pagination-bullet-active {
+        background: var(--primary);
+        opacity: 1;
+      }
+      @media (max-width: 768px) {
+        .testimonials-slider-container {
+          padding: 0 20px;
+        }
+      }
+
+      /* FAQ */
+      .faq-grid {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .faq-item {
+        background: var(--bg-elevated);
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid var(--border-dim);
+      }
+      .faq-question {
+        padding: 1.3rem 1.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+      }
+      .faq-answer {
+        padding: 0 1.5rem 1.3rem;
+        color: var(--muted);
+        display: none;
+      }
+      .faq-item.active .faq-answer {
+        display: block;
+      }
+
+      /* Contact sections same as original (kept) */
+      .contact-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 2.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .contact-info-card {
+        background: linear-gradient(145deg, #0a0a0c, #050708);
+        border-radius: 2rem;
+        border: 1px solid var(--border-med);
+        padding: 2rem;
+        backdrop-filter: blur(4px);
+        transition:
+          transform 0.3s ease,
+          border-color 0.3s;
+        height: 100%;
+      }
+      .contact-info-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-4px);
+      }
+      .info-header {
+        margin-bottom: 2rem;
+      }
+      .info-header h3 {
+        font-size: 1.6rem;
+        font-family: "Space Grotesk", sans-serif;
+        margin-bottom: 0.5rem;
+      }
+      .info-badge {
+        background: rgba(59, 130, 246, 0.12);
+        padding: 0.2rem 1rem;
+        border-radius: 2rem;
+        font-size: 0.7rem;
+        display: inline-block;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+      }
+      .contact-details {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+      .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.8rem;
+        border-radius: 1.2rem;
+        background: rgba(255, 255, 255, 0.02);
+        transition: all 0.2s;
+      }
+      .detail-item:hover {
+        background: rgba(59, 130, 246, 0.08);
+        transform: translateX(5px);
+      }
+      .detail-icon {
+        width: 44px;
+        height: 44px;
+        background-color: var(--white);
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+      }
+      .detail-text {
+        flex: 1;
+      }
+      .detail-text strong {
+        display: block;
+        font-size: 0.85rem;
+        color: var(--muted);
+        font-weight: 500;
+      }
+      .detail-text span {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .social-icon {
+        width: 44px;
+        height: 44px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--muted);
+        transition: 0.2s;
+        cursor: pointer;
+      }
+      .social-icon:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-3px);
+      }
+      .contact-form {
+        background: rgba(10, 10, 12, 0.7);
+        backdrop-filter: blur(12px);
+        padding: 2rem;
+        border-radius: 2rem;
+        border: 1px solid var(--border-med);
+        transition: 0.3s;
+      }
+      .contact-form:hover {
+        border-color: rgba(59, 130, 246, 0.4);
+        box-shadow: 0 15px 35px -15px rgba(0, 0, 0, 0.4);
+      }
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      .form-group label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: #b0b5c4;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        background: #0d0f14;
+        border: 1px solid var(--border-med);
+        padding: 0.9rem 1rem;
+        border-radius: 1.2rem;
+        color: white;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        font-family: "Inter", sans-serif;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      }
+      .btn-submit {
+        background: var(--primary);
+        width: 100%;
+        padding: 1rem;
+        border-radius: 1.5rem;
+        font-weight: 700;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        transition: 0.2s;
+        border: none;
+        cursor: pointer;
+        color: white;
+      }
+      .btn-submit:hover {
+        background: var(--primary-soft);
+        transform: scale(1.01);
+        box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+      }
+      .cta-band {
+        background: linear-gradient(120deg, #0a1128, #03050a);
+        margin: 2rem 5% 4rem;
+        border-radius: 2.5rem;
+        padding: 4rem 2rem;
+        text-align: center;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+      }
+      /* =========================
+   CONTACT SECTION RESPONSIVE
+========================= */
+      @media (max-width: 1100px) {
+        .contact-wrap {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .contact-info-card,
+        .contact-form {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        #contact {
+          padding: 5rem 1.2rem;
+        }
+
+        .contact-info-card,
+        .contact-form {
+          padding: 1.5rem;
+          border-radius: 1.5rem;
+        }
+
+        .detail-item {
+          align-items: flex-start;
+          gap: 0.8rem;
+          padding: 0.9rem;
+        }
+
+        .detail-text span {
+          font-size: 0.9rem;
+          word-break: break-word;
+          line-height: 1.4;
+        }
+
+        .social-links {
+          flex-wrap: wrap;
+        }
+
+        .btn-submit {
+          font-size: 0.95rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .section-header h2 {
+          line-height: 1.2;
+        }
+
+        .contact-info-card,
+        .contact-form {
+          padding: 1.2rem;
+        }
+
+        .detail-icon {
+          width: 40px;
+          height: 40px;
+          flex-shrink: 0;
+        }
+
+        .detail-text strong {
+          font-size: 0.78rem;
+        }
+
+        .detail-text span {
+          font-size: 0.82rem;
+        }
+
+        textarea,
+        input,
+        select {
+          font-size: 0.85rem;
+        }
+      }
+      footer {
+        background: #030305;
+        border-top: 1px solid var(--border-dim);
+        padding: 3rem 5% 2rem;
+        position: relative;
+      }
+      .footer-container {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+      .footer-main {
+        display: grid;
+        grid-template-columns: 1.5fr repeat(3, 1fr) 2fr;
+        gap: 2rem;
+        padding-bottom: 2.5rem;
+        border-bottom: 1px solid var(--border-dim);
+      }
+      .footer-brand p {
+        color: var(--muted);
+        margin-top: 0.75rem;
+        font-size: 0.85rem;
+        line-height: 1.5;
+        max-width: 220px;
+      }
+      .footer-brand .logo {
+        display: inline-block;
+        font-size: 1.8rem;
+      }
+      .footer-col h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        margin-bottom: 1.2rem;
+        color: #e5e7eb;
+      }
+      .footer-col ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+      .footer-col li {
+        font-size: 0.85rem;
+        color: var(--muted);
+        transition: 0.2s;
+        cursor: pointer;
+      }
+      .footer-col li:hover {
+        color: var(--primary);
+        transform: translateX(4px);
+      }
+      .newsletter p {
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin-bottom: 1rem;
+      }
+      .newsletter-form {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+      .newsletter-form input {
+        flex: 1;
+        background: #0c0e12;
+        border: 1px solid var(--border-med);
+        padding: 0.7rem 1rem;
+        border-radius: 2rem;
+        font-size: 0.8rem;
+      }
+      .newsletter-form button {
+        background: var(--primary);
+        border: none;
+        border-radius: 2rem;
+        padding: 0 1.2rem;
+        color: white;
+        font-weight: 600;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .newsletter-form button:hover {
+        background: var(--primary-soft);
+        transform: scale(1.02);
+      }
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        font-size: 0.75rem;
+        color: #4b5563;
+      }
+      .footer-bottom-links {
+        display: flex;
+        gap: 1.5rem;
+      }
+      .footer-bottom-links span {
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .footer-bottom-links span:hover {
+        color: var(--primary);
+      }
+      /* =========================
+   FOOTER RESPONSIVE
+========================= */
+
+      .footer-main > * {
+        min-width: 0;
+      }
+
+      .footer-col ul li,
+      .footer-brand p,
+      .newsletter p {
+        word-break: break-word;
+      }
+
+      @media (max-width: 1024px) {
+        .footer-main {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 2rem;
+        }
+
+        .newsletter {
+          grid-column: span 2;
+        }
+      }
+
+      @media (max-width: 768px) {
+        footer {
+          padding: 2rem 1rem 1.5rem;
+        }
+
+        .footer-main {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
+          padding-bottom: 1.5rem;
+        }
+
+        .footer-brand {
+          grid-column: span 2;
+        }
+
+        .newsletter {
+          grid-column: span 2;
+          margin-top: 0.5rem;
+        }
+
+        .footer-brand p {
+          max-width: 100%;
+          font-size: 0.8rem;
+          margin-top: 0.5rem;
+        }
+
+        .footer-col h4,
+        .newsletter h4 {
+          margin-bottom: 0.7rem;
+          font-size: 0.92rem;
+        }
+
+        .footer-col ul {
+          gap: 0.4rem;
+        }
+
+        .footer-col li {
+          font-size: 0.8rem;
+        }
+
+        .newsletter p {
+          font-size: 0.78rem;
+          margin-bottom: 0.7rem;
+        }
+
+        .newsletter-form {
+          flex-direction: row;
+        }
+
+        .newsletter-form input {
+          padding: 0.75rem 1rem;
+        }
+
+        .newsletter-form button {
+          width: auto;
+          padding: 0 1rem;
+          justify-content: center;
+          white-space: nowrap;
+        }
+
+        .social-links {
+          margin-top: 1rem;
+          gap: 0.7rem;
+        }
+
+        .social-icon {
+          width: 38px;
+          height: 38px;
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+          gap: 0.7rem;
+          margin-top: 1rem;
+        }
+
+        .footer-bottom-links {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 0.5rem 1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .footer-col h4 {
+          margin-bottom: 0.8rem;
+        }
+
+        .footer-col ul {
+          gap: 0.5rem;
+        }
+
+        .social-links {
+          flex-wrap: wrap;
+        }
+
+        .social-icon {
+          width: 40px;
+          height: 40px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="custom-cursor"></div>
+    <div id="cursor-trail"></div>
+
+    <nav class="navbar" id="navbar">
+      <a href="#" class="logo">NEXGEN</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#portfolio">Work</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div style="display: flex; gap: 1rem; align-items: center">
+        <a href="#contact" class="nav-cta">Start project →</a>
+        <div class="menu-toggle" id="menuToggle">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero (unchanged) -->
+    <section class="hero" id="hero">
+      <div class="hero-glow"></div>
+      <div class="hero-badge">✨ Dev • Marketing • AI</div>
+      <h1 class="hero-title">
+        We build & grow <span class="gradient-text">digital products</span
+        ><br />that actually perform.
+      </h1>
+      <div
+        class="hero-title"
+        style="font-size: clamp(2rem, 5vw, 3.5rem); margin-top: 0.5rem"
+      >
+        <span id="typing" class="typed-text"></span
+        ><span class="cursor">|</span>
+      </div>
+      <p class="hero-desc">
+        From full‑stack platforms to AI‑powered tools and growth marketing — we
+        transform ideas into revenue‑generating software and amplified brands.
+        Trusted by 120+ brands.
+      </p>
+      <div class="btn-group">
+        <a href="#contact" class="btn-primary">Launch your vision →</a>
+        <a href="#portfolio" class="btn-outline">See case studies</a>
+      </div>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-number">120+</div>
+          <div class="stat-label">Projects live</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">98%</div>
+          <div class="stat-label">Retention rate</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">40+</div>
+          <div class="stat-label">Engineers</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About etc (truncated but fully functional as before) -->
+    <section class="about" id="about">
+      <div
+        class="about-container"
+        style="max-width: 1200px; margin: 0 auto; padding: 0 5%"
+      >
+        <div class="about-header reveal">
+          <span class="eyebrow">Who we are</span>
+          <h2>Engineering + growth partner</h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-content reveal">
+            <p class="about-text">
+              NexGen Solutions isn’t just another development shop — we're a
+              lean, high-velocity engineering squad founded in 2018 with a
+              mission to bridge the gap between visionary ideas and
+              production-grade software. We combine deep technical discipline,
+              design-led thinking, and a relentless focus on business outcomes.
+            </p>
+            <p class="about-text">
+              Unlike traditional agencies, we embed ourselves into your product
+              journey: from zero‑to‑one MVPs to scaling to millions of users.
+              Our team has roots in FAANG, hyper-growth startups, and open
+              source; we bring that same velocity to every client engagement.
+            </p>
+            <div class="about-highlight reveal">
+              “We don't just write code — we build systems that drive revenue,
+              reduce operational friction, and evolve with your vision.”
+            </div>
+            <div class="about-stats-inline reveal">
+              <div class="inline-stat">
+                <div class="stat-number-sm">7+</div>
+                <div style="font-size: 0.75rem">Years of excellence</div>
+              </div>
+              <div class="inline-stat">
+                <div class="stat-number-sm">100%</div>
+                <div style="font-size: 0.75rem">On-time delivery</div>
+              </div>
+              <div class="inline-stat">
+                <div class="stat-number-sm">24/7</div>
+                <div style="font-size: 0.75rem">Support SLA</div>
+              </div>
+            </div>
+          </div>
+          <div class="about-visual reveal">
+            <div class="about-badge-grid">
+              <div><i data-lucide="award"></i><span>Top 1% talent</span></div>
+              <div><i data-lucide="rocket"></i><span>160+ launches</span></div>
+              <div>
+                <i data-lucide="globe"></i><span>Global clientele</span>
+              </div>
+              <div><i data-lucide="zap"></i><span>Agile at scale</span></div>
+              <div>
+                <i data-lucide="shield-check"></i><span>ISO 27001 ready</span>
+              </div>
+              <div>
+                <i data-lucide="heart-handshake"></i
+                ><span>Partnership model</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="marquee">
+      <div class="marquee-track">
+        <span class="tech-item">⚛️ React</span
+        ><span class="tech-item">🟢 Node.js</span
+        ><span class="tech-item">🌀 Next.js</span
+        ><span class="tech-item">🐘 PostgreSQL</span
+        ><span class="tech-item">☁️ AWS</span
+        ><span class="tech-item">📈 SEO</span
+        ><span class="tech-item">🤖 OpenAI</span
+        ><span class="tech-item">📱 React Native</span
+        ><span class="tech-item">▲ GraphQL</span
+        ><span class="tech-item">📊 Growth Analytics</span
+        ><span class="tech-item">🟢 Node.js</span
+        ><span class="tech-item">🌀 Next.js</span>
+      </div>
+    </div>
+    <section id="services">
+      <div class="section-header">
+        <span class="eyebrow">What we deliver</span>
+        <h2>Development • Marketing • Scale</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="globe"></i></div>
+          <h3>Web platforms</h3>
+          <p>Responsive, high‑performance websites & dashboards.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="settings"></i></div>
+          <h3>Custom software</h3>
+          <p>ERP, CRM, internal tools tailored to your workflow.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="smartphone"></i></div>
+          <h3>Mobile apps</h3>
+          <p>iOS/Android with React Native & Flutter.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="brain-circuit"></i></div>
+          <h3>AI integration</h3>
+          <p>Chatbots, LLM pipelines, intelligent automation.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="trending-up"></i></div>
+          <h3>Growth marketing</h3>
+          <p>SEO, paid ads, CRO, and data-driven acquisition.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i data-lucide="plug"></i></div>
+          <h3>API & backend</h3>
+          <p>Robust microservices & cloud architecture.</p>
+        </div>
+      </div>
+    </section>
+    <section id="portfolio">
+      <div class="section-header">
+        <span class="eyebrow">Selected work</span>
+        <h2>Engineering & growth wins</h2>
+      </div>
+      <div class="portfolio-tabs">
+        <button class="tab-btn active" data-tab="software">
+          <i data-lucide="code-2"></i> Software Engineering
+        </button>
+        <button class="tab-btn" data-tab="marketing">
+          <i data-lucide="megaphone"></i> Marketing & Growth
+        </button>
+      </div>
+      <!-- SOFTWARE PANEL (cards) -->
+      <div id="softwarePanel" class="portfolio-panel active-panel">
+        <div class="software-container">
+          <div class="software-header">
+            <p>
+              Enterprise-grade platforms, scalable architectures, and innovative
+              digital solutions trusted by industry leaders.
+            </p>
+          </div>
+          <div class="software-stats">
+            <div class="software-stat-card">
+              <div class="software-stat-number">99.9%</div>
+              <div class="software-stat-label">Uptime SLA</div>
+            </div>
+            <div class="software-stat-card">
+              <div class="software-stat-number">2M+</div>
+              <div class="software-stat-label">Users Served</div>
+            </div>
+            <div class="software-stat-card">
+              <div class="software-stat-number">50+</div>
+              <div class="software-stat-label">Enterprise Clients</div>
+            </div>
+          </div>
+          <div class="software-grid">
+            <div class="software-card">
+              <div class="card-badge">⭐ Featured</div>
+              <div class="software-card-img">📊</div>
+              <div class="software-card-content">
+                <h3 class="software-card-title">FinTrack Analytics</h3>
+                <p class="software-card-desc">
+                  Real-time fintech dashboard processing ₹4Cr+ daily volume with
+                  99.9% uptime and sub-second latency.
+                </p>
+                <div class="tech-stack">
+                  <span class="tech-pill">React</span
+                  ><span class="tech-pill">Node.js</span
+                  ><span class="tech-pill">Socket.io</span
+                  ><span class="tech-pill">Redis</span
+                  ><span class="tech-pill">AWS</span>
+                </div>
+                <div class="metric-row">
+                  <div class="metric-item">
+                    <div class="metric-value">₹4Cr+</div>
+                    <div class="metric-label">Daily Volume</div>
+                  </div>
+                  <div class="metric-item">
+                    <div class="metric-value">50ms</div>
+                    <div class="metric-label">Avg Response</div>
+                  </div>
+                </div>
+                <a href="#" class="case-study-link">View case study →</a>
+              </div>
+            </div>
+            <div class="software-card">
+              <div class="software-card-img">🏥</div>
+              <div class="software-card-content">
+                <h3 class="software-card-title">MediBook Pro</h3>
+                <p class="software-card-desc">
+                  Complete hospital management system with appointment
+                  scheduling, EMR, and telemedicine integration serving 50k+
+                  patients monthly.
+                </p>
+                <div class="tech-stack">
+                  <span class="tech-pill">Next.js</span
+                  ><span class="tech-pill">PostgreSQL</span
+                  ><span class="tech-pill">Tailwind</span
+                  ><span class="tech-pill">WebRTC</span>
+                </div>
+                <div class="metric-row">
+                  <div class="metric-item">
+                    <div class="metric-value">50k+</div>
+                    <div class="metric-label">Patients/Month</div>
+                  </div>
+                  <div class="metric-item">
+                    <div class="metric-value">24/7</div>
+                    <div class="metric-label">Support</div>
+                  </div>
+                </div>
+                <a href="#" class="case-study-link">View case study →</a>
+              </div>
+            </div>
+            <div class="software-card">
+              <div class="software-card-img">🛒</div>
+              <div class="software-card-content">
+                <h3 class="software-card-title">RetailFlow</h3>
+                <p class="software-card-desc">
+                  Multi-vendor e-commerce suite with inventory management,
+                  real-time analytics, and payment gateway integration.
+                </p>
+                <div class="tech-stack">
+                  <span class="tech-pill">MERN</span
+                  ><span class="tech-pill">Razorpay</span
+                  ><span class="tech-pill">Redis</span
+                  ><span class="tech-pill">Docker</span>
+                </div>
+                <div class="metric-row">
+                  <div class="metric-item">
+                    <div class="metric-value">200+</div>
+                    <div class="metric-label">Stores</div>
+                  </div>
+                  <div class="metric-item">
+                    <div class="metric-value">100k+</div>
+                    <div class="metric-label">Orders/Month</div>
+                  </div>
+                </div>
+                <a href="#" class="case-study-link">View case study →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- MARKETING PANEL (9:16 video slider) -->
+      <div id="marketingPanel" class="portfolio-panel">
+        <div class="marketing-container">
+          <div class="marketing-header">
+            <p>
+              Data-driven campaigns that deliver measurable ROI. See our success
+              stories in action.
+            </p>
+          </div>
+          <div class="marketing-stats">
+            <div class="marketing-stat-card">
+              <div class="marketing-stat-number">+280%</div>
+              <div class="marketing-stat-label">Organic Traffic</div>
+            </div>
+            <div class="marketing-stat-card">
+              <div class="marketing-stat-number">53%</div>
+              <div class="marketing-stat-label">CPA Reduction</div>
+            </div>
+            <div class="marketing-stat-card">
+              <div class="marketing-stat-number">300%</div>
+              <div class="marketing-stat-label">ROAS</div>
+            </div>
+            <div class="marketing-stat-card">
+              <div class="marketing-stat-number">40+</div>
+              <div class="marketing-stat-label">Happy Clients</div>
+            </div>
+          </div>
+          <div class="marketing-slider-wrapper">
+            <div class="swiper marketing-swiper">
+              <div class="swiper-wrapper">
+                <!-- Campaign Video 1 -->
+                <div class="swiper-slide video-slide">
+                  <div class="video-card">
+                    <div class="video-9x16">
+                      <video
+                        src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+                        muted
+                        loop
+                        playsinline
+                        autoplay
+                      ></video>
+                      <div class="video-overlay">
+                        <div class="video-title">
+                          🔥 Brand Awareness Campaign
+                        </div>
+                        <div class="video-metric">2.1M+ impressions</div>
+                      </div>
+                    </div>
+                    <div class="video-info">
+                      <h4>EcoBazaar Scale</h4>
+                      <p>280% organic traffic growth in 6 months</p>
+                      <span class="campaign-badge">SEO + Content</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Campaign Video 2 -->
+                <div class="swiper-slide video-slide">
+                  <div class="video-card">
+                    <div class="video-9x16">
+                      <video
+                        src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4"
+                        muted
+                        loop
+                        playsinline
+                        autoplay
+                      ></video>
+                      <div class="video-overlay">
+                        <div class="video-title">🎯 Performance Max</div>
+                        <div class="video-metric">53% lower CPA</div>
+                      </div>
+                    </div>
+                    <div class="video-info">
+                      <h4>FinLead Acquisition</h4>
+                      <p>Reduced CPA by 53%, 3x conversion rate</p>
+                      <span class="campaign-badge">Google Ads + CRO</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Campaign Video 3 -->
+                <div class="swiper-slide video-slide">
+                  <div class="video-card">
+                    <div class="video-9x16">
+                      <video
+                        src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
+                        muted
+                        loop
+                        playsinline
+                        autoplay
+                      ></video>
+                      <div class="video-overlay">
+                        <div class="video-title">📱 Viral Social Sprint</div>
+                        <div class="video-metric">300% ROAS</div>
+                      </div>
+                    </div>
+                    <div class="video-info">
+                      <h4>StyleHub Launch</h4>
+                      <p>300% ROAS within 3 months, 50k+ engagements</p>
+                      <span class="campaign-badge"
+                        >Social Media + Influencer</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- Campaign Video 4 -->
+                <div class="swiper-slide video-slide">
+                  <div class="video-card">
+                    <div class="video-9x16">
+                      <video
+                        src="https://www.w3schools.com/html/mov_bbb.mp4"
+                        muted
+                        loop
+                        playsinline
+                        autoplay
+                      ></video>
+                      <div class="video-overlay">
+                        <div class="video-title">📧 Email Automation</div>
+                        <div class="video-metric">42% open rate</div>
+                      </div>
+                    </div>
+                    <div class="video-info">
+                      <h4>Retention Engine</h4>
+                      <p>Email sequence boosted repeat purchases by 67%</p>
+                      <span class="campaign-badge">Email Marketing</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="process" style="background: #050709">
+      <div class="section-header">
+        <span class="eyebrow">How we work</span>
+        <h2>Radical transparency,<br />fast delivery</h2>
+      </div>
+      <div class="process-steps">
+        <div class="step" data-counter-target="4">
+          <div class="step-number"><span class="counter-num">0</span></div>
+          <h3>Discovery</h3>
+          <p>Deep-dive & blueprint</p>
+        </div>
+        <div class="step" data-counter-target="4">
+          <div class="step-number"><span class="counter-num">0</span></div>
+          <h3>Design sprint</h3>
+          <p>UI/UX prototypes</p>
+        </div>
+        <div class="step" data-counter-target="6">
+          <div class="step-number">
+            <span class="counter-num">0</span
+            ><span class="counter-suffix">+</span>
+          </div>
+          <h3>Agile dev</h3>
+          <p>Weekly demos</p>
+        </div>
+        <div class="step" data-counter-target="24">
+          <div class="step-number">
+            <span class="counter-num">0</span
+            ><span class="counter-suffix">/7</span>
+          </div>
+          <h3>Launch & scale</h3>
+          <p>Monitoring & growth</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS SLIDER (3 cards visible at once) -->
+    <section id="testimonials">
+      <div class="section-header">
+        <span class="eyebrow">Trusted by founders</span>
+        <h2>What clients say</h2>
+      </div>
+      <div class="testimonials-slider-container">
+        <div class="swiper testimonials-swiper">
+          <div class="swiper-wrapper">
+            <!-- Testimonial 1 -->
+            <div class="swiper-slide">
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">
+                  “NexGen delivered ahead of schedule. World‑class engineering,
+                  meticulous attention to detail — they helped us scale our
+                  fintech platform without any hiccups. Highly recommend!”
+                </p>
+                <div class="testimonial-author">— R. Sharma, CTO</div>
+                <div class="testimonial-role">FinTech Innovations</div>
+              </div>
+            </div>
+            <!-- Testimonial 2 -->
+            <div class="swiper-slide">
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">
+                  “Reduced manual work by 70% with custom internal tool. Their
+                  team integrated seamlessly with our ops and delivered a robust
+                  CRM that saved us hundreds of hours.”
+                </p>
+                <div class="testimonial-author">— P. Desai, Founder</div>
+                <div class="testimonial-role">LogiSuite</div>
+              </div>
+            </div>
+            <!-- Testimonial 3 -->
+            <div class="swiper-slide">
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">
+                  “Beautiful UI, clean code and sales grew 40% after launch. The
+                  growth marketing campaigns drove record conversions. True
+                  partners in every sense.”
+                </p>
+                <div class="testimonial-author">— A. Kumar, CEO</div>
+                <div class="testimonial-role">RetailFlow</div>
+              </div>
+            </div>
+            <!-- Testimonial 4 (extra) -->
+            <div class="swiper-slide">
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">
+                  “The AI integration they built for our customer support
+                  reduced response time by 60%. NexGen is always ahead of tech
+                  curve — brilliant strategists.”
+                </p>
+                <div class="testimonial-author">— S. Mehta, Product Lead</div>
+                <div class="testimonial-role">HelpGenix</div>
+              </div>
+            </div>
+            <!-- Testimonial 5 -->
+            <div class="swiper-slide">
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">
+                  “From discovery to deployment, their agile process was
+                  flawless. Marketing ROI tripled while app engagement
+                  skyrocketed. Will work again.”
+                </p>
+                <div class="testimonial-author">— N. Joshi, CMO</div>
+                <div class="testimonial-role">StyleHub</div>
+              </div>
+            </div>
+          </div>
+          <!-- Navigation buttons -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" style="background: #050709">
+      <div class="section-header">
+        <span class="eyebrow">FAQ</span>
+        <h2>Answers to common questions</h2>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <div class="faq-question">
+            How long does custom software development take? <span>+</span>
+          </div>
+          <div class="faq-answer">
+            Timelines depend heavily on complexity. A basic app might take 2–4
+            months, while complex enterprise systems can take 6–12 months or
+            longer.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            What information do you need to start a project? <span>+</span>
+          </div>
+          <div class="faq-answer">
+            We need a clear outline of goals, target audience, functional
+            requirements, and any existing brand guidelines or technical
+            infrastructure.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            How do I start a digital marketing campaign? <span>+</span>
+          </div>
+          <div class="faq-answer">
+            It involves defining goals, identifying the target audience,
+            selecting platforms (SEO, PPC, Social), creating content, and
+            setting a budget.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            How long does it take to see SEO results? <span>+</span>
+          </div>
+          <div class="faq-answer">
+            SEO is a long-term strategy; significant results typically appear in
+            3–6 months, though this varies based on competition.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            What services does your full-service agency offer? <span>+</span>
+          </div>
+          <div class="faq-answer">
+            We provide a comprehensive range of services, including SEO, content
+            creation, social media management, website design, and marketing
+            automation.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            How do you ensure product quality? <span>+</span>
+          </div>
+          <div class="faq-answer">
+            We employ rigorous QA (Quality Assurance) testing, including
+            functional, usability, and performance testing before deployment.
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="cta-band">
+      <h2 style="font-size: 2rem">
+        Build something remarkable
+        <span style="color: var(--primary)"><i data-lucide="rocket"></i></span>
+      </h2>
+      <p style="margin: 1rem auto; max-width: 500px">
+        Let's discuss your vision — no obligations, just expert guidance.
+      </p>
+      <a href="#contact" class="btn-primary" style="display: inline-block"
+        >Get a free estimate →</a
+      >
+    </div>
+    <section id="contact">
+      <div class="section-header">
+        <span class="eyebrow">Start a conversation</span>
+        <h2>Let's turn ideas into code</h2>
+      </div>
+      <div class="contact-wrap">
+        <div class="contact-info-card reveal">
+          <div class="info-header">
+            <div class="info-badge">✨ Connect directly</div>
+            <h3>Let's talk business</h3>
+            <p style="color: var(--muted); margin-top: 0.5rem">
+              Reach out through any channel — we respond within 2 hours.
+            </p>
+          </div>
+          <div class="contact-details">
+            <div class="detail-item">
+              <div class="detail-icon"><i data-lucide="map-pin"></i></div>
+              <div class="detail-text">
+                <strong>Visit us</strong><span>Pune, India</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon"><i data-lucide="mail"></i></div>
+              <div class="detail-text">
+                <strong>Email</strong><span>contact@nexgen.in</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon"><i data-lucide="phone"></i></div>
+              <div class="detail-text">
+                <strong>Call / WhatsApp</strong
+                ><span>+91 93099 73904 / +91 883 016 5652</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon"><i data-lucide="clock"></i></div>
+              <div class="detail-text">
+                <strong>Business hours</strong
+                ><span>Mon–Sat, 9am – 7pm IST</span>
+              </div>
+            </div>
+          </div>
+          <div class="social-links">
+            <div class="social-icon"><i data-lucide="linkedin"></i></div>
+            <div class="social-icon"><i data-lucide="twitter"></i></div>
+            <div class="social-icon"><i data-lucide="github"></i></div>
+            <div class="social-icon"><i data-lucide="instagram"></i></div>
+          </div>
+        </div>
+        <form class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label><i data-lucide="user"></i> Full name</label
+            ><input type="text" placeholder="John Carter" required />
+          </div>
+          <div class="form-group">
+            <label><i data-lucide="mail"></i> Email address</label
+            ><input type="email" placeholder="hello@company.com" required />
+          </div>
+          <div class="form-group">
+            <label><i data-lucide="briefcase"></i> I'm interested in</label
+            ><select>
+              <option>Website Development</option>
+              <option>Custom Software</option>
+              <option>Mobile App</option>
+              <option>AI Integration</option>
+              <option>Marketing / Growth</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label><i data-lucide="message-square"></i> Project details</label
+            ><textarea
+              rows="3"
+              placeholder="Tell us about your vision, timeline, or goals..."
+            ></textarea>
+          </div>
+          <button type="submit" class="btn-submit">
+            <i data-lucide="send"></i> Send message →
+          </button>
+          <p id="formFeedback" style="margin-top: 1rem; font-size: 0.8rem"></p>
+        </form>
+      </div>
+    </section>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-main">
+          <div class="footer-brand">
+            <span class="logo">NEXGEN</span>
+            <p>
+              Engineering excellence & growth mastery — build scalable software
+              that drives revenue.
+            </p>
+            <div class="social-links" style="margin-top: 1.2rem; gap: 0.8rem">
+              <div class="social-icon"><i data-lucide="linkedin"></i></div>
+              <div class="social-icon"><i data-lucide="twitter"></i></div>
+              <div class="social-icon"><i data-lucide="github"></i></div>
+              <div class="social-icon"><i data-lucide="instagram"></i></div>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Explore</h4>
+            <ul>
+              <li>About Us</li>
+              <li>Case Studies</li>
+              <li>Careers</li>
+              <li>Blog</li>
+              <li>Press</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Services</h4>
+            <ul>
+              <li>Web Development</li>
+              <li>Mobile Apps</li>
+              <li>AI & Automation</li>
+              <li>Growth Marketing</li>
+              <li>Cloud Consulting</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Support</h4>
+            <ul>
+              <li>Help Center</li>
+              <li>Contact Support</li>
+              <li>Documentation</li>
+              <li>Status</li>
+              <li>Report Issue</li>
+            </ul>
+          </div>
+          <div class="newsletter">
+            <h4>Insider Updates</h4>
+            <p>Get the latest on AI, engineering & growth strategies.</p>
+            <div class="newsletter-form">
+              <input
+                type="email"
+                placeholder="Your email"
+                id="newsletterEmail"
+              /><button id="newsletterBtn">
+                <i data-lucide="send"></i> Subscribe
+              </button>
+            </div>
+            <p style="font-size: 0.7rem; margin-top: 0.7rem">
+              No spam, unsubscribe anytime.
+            </p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div>© 2025 NexGen Solutions — All rights reserved.</div>
+          <div class="footer-bottom-links">
+            <span>Privacy Policy</span><span>Terms of Service</span
+            ><span>Cookie Preferences</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+      //tabs logic of selected work section
+      const softwarePanel = document.getElementById("softwarePanel");
+      const marketingPanel = document.getElementById("marketingPanel");
+      const tabBtns = document.querySelectorAll(".tab-btn");
+      let marketingSwiperInstance = null;
+      function activateTab(tabId) {
+        softwarePanel.classList.remove("active-panel");
+        marketingPanel.classList.remove("active-panel");
+        if (tabId === "software") softwarePanel.classList.add("active-panel");
+        else if (tabId === "marketing")
+          marketingPanel.classList.add("active-panel");
+        tabBtns.forEach((btn) => {
+          if (btn.dataset.tab === tabId) btn.classList.add("active");
+          else btn.classList.remove("active");
+        });
+        if (tabId === "marketing") {
+          setTimeout(() => {
+            if (!marketingSwiperInstance) {
+              marketingSwiperInstance = new Swiper(".marketing-swiper", {
+                slidesPerView: 1,
+                spaceBetween: 20,
+                loop: true,
+                autoplay: { delay: 3000, disableOnInteraction: false },
+                navigation: {
+                  nextEl: ".marketing-swiper .swiper-button-next",
+                  prevEl: ".marketing-swiper .swiper-button-prev",
+                },
+                pagination: {
+                  el: ".marketing-swiper .swiper-pagination",
+                  clickable: true,
+                },
+                breakpoints: {
+                  640: { slidesPerView: 2 },
+                  1024: { slidesPerView: 3 },
+                },
+              });
+            } else marketingSwiperInstance.update();
+          }, 80);
+        }
+      }
+      tabBtns.forEach((btn) =>
+        btn.addEventListener("click", (e) => {
+          activateTab(btn.dataset.tab);
+        }),
+      );
+      // Initialize Swiper slider for testimonials (3 cards per view, responsive)
+      const swiper = new Swiper(".testimonials-swiper", {
+        slidesPerView: 1,
+        spaceBetween: 24,
+        loop: true,
+        autoplay: { delay: 2000, disableOnInteraction: false },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        pagination: { el: ".swiper-pagination", clickable: true },
+        breakpoints: {
+          768: { slidesPerView: 2, spaceBetween: 24 },
+          1024: { slidesPerView: 3, spaceBetween: 28 },
+        },
+      });
+
+      // Existing scripts
+      const cursor = document.getElementById("custom-cursor"),
+        trail = document.getElementById("cursor-trail");
+      if (cursor && trail) {
+        document.addEventListener("mousemove", (e) => {
+          cursor.style.transform = `translate(${e.clientX - 4}px,${e.clientY - 4}px)`;
+          trail.style.transform = `translate(${e.clientX - 16}px,${e.clientY - 16}px)`;
+        });
+        document
+          .querySelectorAll("a, button, .service-card, .btn-primary, .step")
+          .forEach((el) => {
+            el.addEventListener("mouseenter", () => {
+              trail.style.width = "48px";
+              trail.style.height = "48px";
+              trail.style.borderColor = "#3b82f6";
+            });
+            el.addEventListener("mouseleave", () => {
+              trail.style.width = "32px";
+              trail.style.height = "32px";
+              trail.style.borderColor = "rgba(59,130,246,0.5)";
+            });
+          });
+      }
+      const words = ["innovate.", "scale.", "dominate.", "build faster."];
+      let idx = 0,
+        charIdx = 0,
+        isDeleting = false;
+      const typedEl = document.getElementById("typing");
+      function typeEffect() {
+        if (!typedEl) return;
+        const current = words[idx];
+        if (isDeleting) typedEl.textContent = current.substring(0, charIdx--);
+        else typedEl.textContent = current.substring(0, charIdx++);
+        if (!isDeleting && charIdx === current.length) isDeleting = true;
+        else if (isDeleting && charIdx === 0) {
+          isDeleting = false;
+          idx = (idx + 1) % words.length;
+        }
+        setTimeout(typeEffect, isDeleting ? 70 : 150);
+      }
+      if (typedEl) typeEffect();
+      let started = false;
+      function startCounters() {
+        if (started) return;
+        const processSection = document.getElementById("process");
+        if (!processSection) return;
+        const rect = processSection.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100 && rect.bottom > 0) {
+          started = true;
+          document
+            .querySelectorAll(".step[data-counter-target]")
+            .forEach((step) => {
+              const target = parseInt(
+                step.getAttribute("data-counter-target"),
+                10,
+              );
+              const numSpan = step.querySelector(".counter-num");
+              if (!numSpan) return;
+              let current = 0;
+              const increment = target / 30;
+              const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                  numSpan.textContent = target;
+                  clearInterval(timer);
+                } else {
+                  numSpan.textContent = Math.floor(current);
+                }
+              }, 20);
+            });
+        }
+      }
+      window.addEventListener("scroll", startCounters);
+      startCounters();
+      window.addEventListener("scroll", () => {
+        const nav = document.getElementById("navbar");
+        if (window.scrollY > 50) nav.classList.add("scrolled");
+        else nav.classList.remove("scrolled");
+      });
+      const menuBtn = document.getElementById("menuToggle"),
+        navMenu = document.getElementById("navLinks");
+      if (menuBtn)
+        menuBtn.addEventListener("click", () =>
+          navMenu.classList.toggle("active"),
+        );
+      document.querySelectorAll(".faq-question").forEach((q) => {
+        q.addEventListener("click", () => {
+          q.closest(".faq-item").classList.toggle("active");
+        });
+      });
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("active");
+          });
+        },
+        { threshold: 0.1 },
+      );
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => observer.observe(el));
+      const form = document.getElementById("contactForm");
+      if (form) {
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          document.getElementById("formFeedback").innerHTML =
+            "✅ Thanks! We’ll reach out within 24h.";
+          form.reset();
+          setTimeout(
+            () => (document.getElementById("formFeedback").innerHTML = ""),
+            4000,
+          );
+        });
+      }
+      const newsletterBtn = document.getElementById("newsletterBtn");
+      if (newsletterBtn) {
+        newsletterBtn.addEventListener("click", () => {
+          const emailInput = document.getElementById("newsletterEmail");
+          if (emailInput.value.trim() && emailInput.value.includes("@")) {
+            alert("🎉 Subscribed! Thank you.");
+            emailInput.value = "";
+          } else alert("Please enter a valid email.");
+        });
+      }
+      window.addEventListener("load", () => {
+        if (window.lucide) lucide.createIcons();
+      });
+    </script>
+  </body>
+</html>
