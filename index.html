@@ -1630,7 +1630,7 @@
         .social-icon i {
           font-size: 18px;
         }
-        .social-icon a{
+        .social-icon a {
           text-decoration: none;
         }
       }
@@ -1670,8 +1670,7 @@
         class="hero-title"
         style="font-size: clamp(2rem, 5vw, 3.5rem); margin-top: 0.5rem"
       >
-        <span id="typing" class="typed-text"></span
-        ><span class="cursor"></span>
+        <span id="typing" class="typed-text"></span><span class="cursor"></span>
       </div>
       <p class="hero-desc">
         From full‑stack platforms to AI‑powered tools and growth marketing — we
@@ -2564,7 +2563,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <div>© 2025 NexGen Solutions — All rights reserved.</div>
+          <div>© 2026 NexGen Solutions — All rights reserved.</div>
           <div class="footer-bottom-links">
             <span>Privacy Policy</span><span>Terms of Service</span
             ><span>Cookie Preferences</span>
@@ -2660,7 +2659,12 @@
             });
           });
       }
-      const words = ["innovate...", "scale...", "dominate...", "build faster..."];
+      const words = [
+        "innovate...",
+        "scale...",
+        "dominate...",
+        "build faster...",
+      ];
       let idx = 0,
         charIdx = 0,
         isDeleting = false;
@@ -2725,6 +2729,14 @@
       document.querySelectorAll(".faq-question").forEach((q) => {
         q.addEventListener("click", () => {
           q.closest(".faq-item").classList.toggle("active");
+        });
+      });
+
+      const navItems = document.querySelectorAll(".nav-links a");
+
+      navItems.forEach((item) => {
+        item.addEventListener("click", () => {
+          navLinks.classList.remove("active");
         });
       });
       const observer = new IntersectionObserver(
