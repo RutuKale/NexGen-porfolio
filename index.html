@@ -12,12 +12,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <!-- font awesome icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-V82p8vN1C0Dov67P06vU8M/E/n3N5Z/O5t2Wj8ZfLzG/7Zk4zB/6XvU+8vN1C0Dov67P06vU8M/E/n3N5Z/O5t2Wj8ZfLzG/7Zk4zB/6XvU+8vN1C0Dov67P06vU8M/E/n3N5Z/O5t2Wj8ZfLzG/7Zk4zB=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
     <!-- Swiper CSS for modern slider (lightweight, touch-friendly) -->
     <link
@@ -698,9 +706,15 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 4.5rem;
+        /*font-size: 4.5rem;*/
         position: relative;
         overflow: hidden;
+      }
+      .software-card-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
       }
       .software-card-img::after {
         content: "";
@@ -928,19 +942,6 @@
         font-size: 0.7rem;
         color: var(--primary);
       }
-      .video-info {
-        padding: 1rem;
-        text-align: center;
-      }
-      .video-info h4 {
-        font-size: 1rem;
-        font-weight: 700;
-        margin-bottom: 0.25rem;
-      }
-      .video-info p {
-        font-size: 0.75rem;
-        color: var(--muted);
-      }
       .campaign-badge {
         display: inline-block;
         background: rgba(16, 185, 129, 0.2);
@@ -950,6 +951,71 @@
         font-size: 0.65rem;
         font-weight: 600;
         margin-top: 0.5rem;
+      }
+
+      /* Our Team Section*/
+      /* TEAM SECTION */
+      .team-section {
+        background: linear-gradient(180deg, #050709 0%, #010101 100%);
+      }
+
+      .team-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 2rem;
+      }
+
+      .team-card {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border-dim);
+        border-radius: 2rem;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        text-align: center;
+      }
+
+      .team-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--primary);
+        box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.25);
+      }
+
+      .team-image {
+        width: 100%;
+        height: 280px;
+        overflow: hidden;
+      }
+
+      .team-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .team-content {
+        padding: 1.5rem;
+      }
+
+      .team-content h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.4rem;
+        font-family: "Space Grotesk", sans-serif;
+      }
+
+      .team-role {
+        color: var(--primary);
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .team-content p {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.6;
       }
 
       /* Custom swiper buttons */
@@ -1177,7 +1243,10 @@
         display: flex;
         gap: 1rem;
         margin-top: 1.5rem;
+        flex-wrap: wrap;
+        margin-top: 1rem;
       }
+
       .social-icon {
         width: 44px;
         height: 44px;
@@ -1189,6 +1258,7 @@
         color: var(--muted);
         transition: 0.2s;
         cursor: pointer;
+        text-decoration: none;
       }
       .social-icon:hover {
         background: var(--primary);
@@ -1304,10 +1374,6 @@
           font-size: 0.9rem;
           word-break: break-word;
           line-height: 1.4;
-        }
-
-        .social-links {
-          flex-wrap: wrap;
         }
 
         .btn-submit {
@@ -1538,16 +1604,6 @@
           white-space: nowrap;
         }
 
-        .social-links {
-          margin-top: 1rem;
-          gap: 0.7rem;
-        }
-
-        .social-icon {
-          width: 38px;
-          height: 38px;
-        }
-
         .footer-bottom {
           flex-direction: column;
           text-align: center;
@@ -1571,13 +1627,11 @@
           gap: 0.5rem;
         }
 
-        .social-links {
-          flex-wrap: wrap;
+        .social-icon i {
+          font-size: 18px;
         }
-
-        .social-icon {
-          width: 40px;
-          height: 40px;
+        .social-icon a{
+          text-decoration: none;
         }
       }
     </style>
@@ -1800,20 +1854,21 @@
           </div>
           <div class="software-grid">
             <div class="software-card">
-              <div class="card-badge">⭐ Featured</div>
-              <div class="software-card-img">📊</div>
+              <!-- <div class="card-badge">⭐ Featured</div> -->
+              <div class="software-card-img">
+                <img src="./assets/software projects/software-5.png" alt="" />
+              </div>
               <div class="software-card-content">
-                <h3 class="software-card-title">FinTrack Analytics</h3>
+                <h3 class="software-card-title">MediCare Plus Hospital</h3>
                 <p class="software-card-desc">
-                  Real-time fintech dashboard processing ₹4Cr+ daily volume with
-                  99.9% uptime and sub-second latency.
+                  Custom Website with Appointment booking, Emergency Call,
+                  Whatsapp Chat and Contact with Email and Mobile number.
                 </p>
                 <div class="tech-stack">
-                  <span class="tech-pill">React</span
-                  ><span class="tech-pill">Node.js</span
-                  ><span class="tech-pill">Socket.io</span
-                  ><span class="tech-pill">Redis</span
-                  ><span class="tech-pill">AWS</span>
+                  <span class="tech-pill">HTML/CSS</span>
+                  <span class="tech-pill">Node</span>
+                  <span class="tech-pill">MongoDB</span>
+                  <span class="tech-pill">TailwindCSS</span>
                 </div>
                 <div class="metric-row">
                   <div class="metric-item">
@@ -1829,19 +1884,82 @@
               </div>
             </div>
             <div class="software-card">
-              <div class="software-card-img">🏥</div>
+              <div class="card-badge">⭐ Featured</div>
+              <div class="software-card-img">
+                <img src="./assets/software projects/software-6.png" alt="" />
+              </div>
               <div class="software-card-content">
-                <h3 class="software-card-title">MediBook Pro</h3>
+                <h3 class="software-card-title">City Hospital</h3>
                 <p class="software-card-desc">
-                  Complete hospital management system with appointment
-                  scheduling, EMR, and telemedicine integration serving 50k+
-                  patients monthly.
+                  Custom Website with Appointment booking, Emergency Call,
+                  Whatsapp Chat and Contact with Email and Mobile number.
                 </p>
                 <div class="tech-stack">
-                  <span class="tech-pill">Next.js</span
-                  ><span class="tech-pill">PostgreSQL</span
+                  <span class="tech-pill">HTML/CSS</span>
+                  <span class="tech-pill">Node</span>
+                  <span class="tech-pill">MongoDB</span>
+                  <span class="tech-pill">TailwindCSS</span>
+                </div>
+                <div class="metric-row">
+                  <div class="metric-item">
+                    <div class="metric-value">₹4Cr+</div>
+                    <div class="metric-label">Daily Volume</div>
+                  </div>
+                  <div class="metric-item">
+                    <div class="metric-value">50ms</div>
+                    <div class="metric-label">Avg Response</div>
+                  </div>
+                </div>
+                <a href="#" class="case-study-link">View case study →</a>
+              </div>
+            </div>
+            <div class="software-card">
+              <!-- <div class="card-badge">⭐ Featured</div> -->
+              <div class="software-card-img">
+                <img src="./assets/software projects/software-1.webp" alt="" />
+              </div>
+              <div class="software-card-content">
+                <h3 class="software-card-title">Anand Rent and Services</h3>
+                <p class="software-card-desc">
+                  Warehouse rental management system with inventory tracking,
+                  booking engine, and payment gateway.
+                </p>
+                <div class="tech-stack">
+                  <span class="tech-pill">React</span>
+                  <span class="tech-pill">Firebase</span>
+                  <span class="tech-pill">Node.js</span>
+                  <span class="tech-pill">Tailwind</span>
+                </div>
+                <div class="metric-row">
+                  <div class="metric-item">
+                    <div class="metric-value">₹4Cr+</div>
+                    <div class="metric-label">Daily Volume</div>
+                  </div>
+                  <div class="metric-item">
+                    <div class="metric-value">50ms</div>
+                    <div class="metric-label">Avg Response</div>
+                  </div>
+                </div>
+                <a href="#" class="case-study-link">View case study →</a>
+              </div>
+            </div>
+            <div class="software-card">
+              <div class="software-card-img">
+                <img src="./assets/software projects/software-2.webp" alt="" />
+              </div>
+              <div class="software-card-content">
+                <h3 class="software-card-title">Digi Aucation</h3>
+                <p class="software-card-desc">
+                  Dynamic cricket auction system featuring real-time live
+                  bidding, automatic highest-bid tracking, player sold-out
+                  status updates, team budget management, and a secure admin
+                  dashboard to control auction flow and player listings.
+                </p>
+                <div class="tech-stack">
+                  <span class="tech-pill">React</span
+                  ><span class="tech-pill">Node.js</span
                   ><span class="tech-pill">Tailwind</span
-                  ><span class="tech-pill">WebRTC</span>
+                  ><span class="tech-pill">MySQL</span>
                 </div>
                 <div class="metric-row">
                   <div class="metric-item">
@@ -1857,12 +1975,15 @@
               </div>
             </div>
             <div class="software-card">
-              <div class="software-card-img">🛒</div>
+              <div class="software-card-img">
+                <img src="./assets/software projects/software-3.webp" alt="" />
+              </div>
               <div class="software-card-content">
-                <h3 class="software-card-title">RetailFlow</h3>
+                <h3 class="software-card-title">Golden Hour Hospital</h3>
                 <p class="software-card-desc">
-                  Multi-vendor e-commerce suite with inventory management,
-                  real-time analytics, and payment gateway integration.
+                  Custom web-based hospital management system with appointment
+                  booking, patient records, admin dashboard, and secure MySQL
+                  database.
                 </p>
                 <div class="tech-stack">
                   <span class="tech-pill">MERN</span
@@ -1921,23 +2042,16 @@
                   <div class="video-card">
                     <div class="video-9x16">
                       <video
-                        src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+                        src="./assets/marketing projects/marketing-3.mp4"
                         muted
                         loop
                         playsinline
                         autoplay
                       ></video>
                       <div class="video-overlay">
-                        <div class="video-title">
-                          🔥 Brand Awareness Campaign
-                        </div>
-                        <div class="video-metric">2.1M+ impressions</div>
+                        <div class="video-title">👁️ Views - 83.2k</div>
+                        <div class="video-metric">❤️ Likes - 398</div>
                       </div>
-                    </div>
-                    <div class="video-info">
-                      <h4>EcoBazaar Scale</h4>
-                      <p>280% organic traffic growth in 6 months</p>
-                      <span class="campaign-badge">SEO + Content</span>
                     </div>
                   </div>
                 </div>
@@ -1946,21 +2060,16 @@
                   <div class="video-card">
                     <div class="video-9x16">
                       <video
-                        src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4"
+                        src="./assets/marketing projects/marketing-1.mp4"
                         muted
                         loop
                         playsinline
                         autoplay
                       ></video>
                       <div class="video-overlay">
-                        <div class="video-title">🎯 Performance Max</div>
-                        <div class="video-metric">53% lower CPA</div>
+                        <div class="video-title">👁️ Views - 36k</div>
+                        <div class="video-metric">❤️ Likes - 949</div>
                       </div>
-                    </div>
-                    <div class="video-info">
-                      <h4>FinLead Acquisition</h4>
-                      <p>Reduced CPA by 53%, 3x conversion rate</p>
-                      <span class="campaign-badge">Google Ads + CRO</span>
                     </div>
                   </div>
                 </div>
@@ -1969,23 +2078,16 @@
                   <div class="video-card">
                     <div class="video-9x16">
                       <video
-                        src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
+                        src="./assets/marketing projects/marketing-2.mp4"
                         muted
                         loop
                         playsinline
                         autoplay
                       ></video>
                       <div class="video-overlay">
-                        <div class="video-title">📱 Viral Social Sprint</div>
-                        <div class="video-metric">300% ROAS</div>
+                        <div class="video-title">👁️ Views - 167k</div>
+                        <div class="video-metric">❤️ Likes - 7100</div>
                       </div>
-                    </div>
-                    <div class="video-info">
-                      <h4>StyleHub Launch</h4>
-                      <p>300% ROAS within 3 months, 50k+ engagements</p>
-                      <span class="campaign-badge"
-                        >Social Media + Influencer</span
-                      >
                     </div>
                   </div>
                 </div>
@@ -1994,21 +2096,16 @@
                   <div class="video-card">
                     <div class="video-9x16">
                       <video
-                        src="https://www.w3schools.com/html/mov_bbb.mp4"
+                        src="./assets/marketing projects/marketing-3.mp4"
                         muted
                         loop
                         playsinline
                         autoplay
                       ></video>
                       <div class="video-overlay">
-                        <div class="video-title">📧 Email Automation</div>
-                        <div class="video-metric">42% open rate</div>
+                        <div class="video-title">👁️ Views - 31k</div>
+                        <div class="video-metric">❤️ Likes - 642</div>
                       </div>
-                    </div>
-                    <div class="video-info">
-                      <h4>Retention Engine</h4>
-                      <p>Email sequence boosted repeat purchases by 67%</p>
-                      <span class="campaign-badge">Email Marketing</span>
                     </div>
                   </div>
                 </div>
@@ -2021,6 +2118,7 @@
         </div>
       </div>
     </section>
+    <!-- process -->
     <section id="process" style="background: #050709">
       <div class="section-header">
         <span class="eyebrow">How we work</span>
@@ -2052,6 +2150,92 @@
           </div>
           <h3>Launch & scale</h3>
           <p>Monitoring & growth</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Team Section -->
+    <section class="team-section" id="team">
+      <div class="section-header">
+        <span class="eyebrow">Our experts</span>
+        <h2>Meet our team</h2>
+      </div>
+
+      <div class="team-grid">
+        <!-- Team Member 1 -->
+        <div class="team-card">
+          <div class="team-image">
+            <img src="./assets/team/team-3.jpg" alt="Marketing Lead" />
+          </div>
+
+          <div class="team-content">
+            <h3>Shadab Sayyad</h3>
+            <div class="team-role">
+              Marketing Lead • Video Editor • Social Media Marketer
+            </div>
+
+            <p>
+              Creates engaging social media campaigns, viral video edits, reels,
+              and high-converting brand content strategies.
+            </p>
+          </div>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="team-card">
+          <div class="team-image">
+            <img
+              src="./assets/Profile-picture/umar.png"
+              alt="Software Engineer"
+            />
+          </div>
+
+          <div class="team-content">
+            <h3>Umar Shaikh</h3>
+            <div class="team-role">Software Engineer • Lead Manager</div>
+
+            <p>
+              MERN stack engineer specializing in responsive UI, dashboard
+              systems, authentication, and cloud deployment.
+            </p>
+          </div>
+        </div>
+
+        <!-- Team Member 3 -->
+        <div class="team-card">
+          <div class="team-image" style="object-position: center top">
+            <img
+              src="./assets/Profile-picture/rutuja.png"
+              alt="Software Engineer"
+            />
+          </div>
+
+          <div class="team-content">
+            <h3>Rutuja Kale</h3>
+            <div class="team-role">Software Engineer</div>
+
+            <p>
+              Frontend and backend developer focused on scalable web
+              applications, API integrations, and performance optimization.
+            </p>
+          </div>
+        </div>
+
+        <!-- Team Member 4 -->
+        <div class="team-card">
+          <div class="team-image">
+            <img src="./assets/team/team-4.jpg" alt="Marketing Lead" />
+          </div>
+
+          <div class="team-content">
+            <h3>Neha Singh</h3>
+            <div class="team-role">Marketing Lead</div>
+
+            <p>
+              Leads digital growth campaigns, branding strategies, SEO
+              optimization, and client acquisition initiatives.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -2260,10 +2444,21 @@
             </div>
           </div>
           <div class="social-links">
-            <div class="social-icon"><i data-lucide="linkedin"></i></div>
-            <div class="social-icon"><i data-lucide="twitter"></i></div>
-            <div class="social-icon"><i data-lucide="github"></i></div>
-            <div class="social-icon"><i data-lucide="instagram"></i></div>
+            <a href="#" class="social-icon">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+
+            <a href="#" class="social-icon">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+
+            <a href="#" class="social-icon">
+              <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+
+            <a href="#" class="social-icon">
+              <i class="fa-brands fa-youtube"></i>
+            </a>
           </div>
         </div>
         <form class="contact-form" id="contactForm">
@@ -2309,10 +2504,16 @@
               that drives revenue.
             </p>
             <div class="social-links" style="margin-top: 1.2rem; gap: 0.8rem">
-              <div class="social-icon"><i data-lucide="linkedin"></i></div>
-              <div class="social-icon"><i data-lucide="twitter"></i></div>
-              <div class="social-icon"><i data-lucide="github"></i></div>
-              <div class="social-icon"><i data-lucide="instagram"></i></div>
+              <div class="social-icon">
+                <i class="fa-brands fa-linkedin-in"></i>
+              </div>
+              <div class="social-icon">
+                <i class="fa-brands fa-twitter"></i>
+              </div>
+              <div class="social-icon"><i class="fa-brands fa-github"></i></div>
+              <div class="social-icon">
+                <i class="fa-brands fa-instagram"></i>
+              </div>
             </div>
           </div>
           <div class="footer-col">
@@ -2560,8 +2761,12 @@
           } else alert("Please enter a valid email.");
         });
       }
-      window.addEventListener("load", () => {
+      /* window.addEventListener("load", () => {
         if (window.lucide) lucide.createIcons();
+      }); */
+      /*lucide.createIcons();*/
+      document.addEventListener("DOMContentLoaded", () => {
+        lucide.createIcons();
       });
     </script>
   </body>
