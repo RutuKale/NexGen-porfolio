@@ -267,7 +267,7 @@
         backdrop-filter: blur(4px);
       }
       .hero-title {
-        font-size: clamp(2.8rem, 6vw, 5.5rem);
+        font-size: clamp(2rem, 4vw, 4rem);
         font-weight: 800;
         line-height: 1.1;
         letter-spacing: -0.02em;
@@ -1671,7 +1671,7 @@
         style="font-size: clamp(2rem, 5vw, 3.5rem); margin-top: 0.5rem"
       >
         <span id="typing" class="typed-text"></span
-        ><span class="cursor">|</span>
+        ><span class="cursor"></span>
       </div>
       <p class="hero-desc">
         From full‑stack platforms to AI‑powered tools and growth marketing — we
@@ -2660,7 +2660,7 @@
             });
           });
       }
-      const words = ["innovate.", "scale.", "dominate.", "build faster."];
+      const words = ["innovate...", "scale...", "dominate...", "build faster..."];
       let idx = 0,
         charIdx = 0,
         isDeleting = false;
@@ -2675,7 +2675,7 @@
           isDeleting = false;
           idx = (idx + 1) % words.length;
         }
-        setTimeout(typeEffect, isDeleting ? 70 : 150);
+        setTimeout(typeEffect, isDeleting ? 150 : 210);
       }
       if (typedEl) typeEffect();
       let started = false;
@@ -2761,10 +2761,6 @@
           } else alert("Please enter a valid email.");
         });
       }
-      /* window.addEventListener("load", () => {
-        if (window.lucide) lucide.createIcons();
-      }); */
-      /*lucide.createIcons();*/
       document.addEventListener("DOMContentLoaded", () => {
         lucide.createIcons();
       });
